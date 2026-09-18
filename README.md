@@ -5,6 +5,15 @@
 Script en Python (boto3) para practicar operaciones basicas de S3: probar conexion,
 crear/listar/eliminar buckets, subir, listar, descargar y eliminar objetos.
 
+## Que es boto3
+
+[boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) es el SDK
+oficial de AWS para Python. Permite crear, configurar y administrar servicios de AWS
+(como S3, EC2, DynamoDB, etc.) directamente desde codigo Python, usando las mismas
+credenciales que la AWS CLI. En este proyecto se usa el cliente `boto3.client("s3")`
+para llamar a las operaciones de S3 (crear bucket, subir/descargar objetos, listar,
+eliminar) sin necesidad de ejecutar comandos `aws s3` manualmente.
+
 ## Requisitos previos
 
 ### 1. Instalar AWS CLI
