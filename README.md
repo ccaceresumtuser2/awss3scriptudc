@@ -18,12 +18,16 @@ Estimacion inicial del alcance: **42 puntos**.
 Como estudiante, quiero probar la conexion con AWS para confirmar que mis credenciales del
 laboratorio funcionan.
 
+**Criterios de aceptación:**
+
 - Con credenciales validas del perfil `default`, la prueba obtiene la identidad mediante STS y lista los buckets.
 - Si AWS devuelve un error de cliente, se informa el fallo de conexion.
 
 **US-02 · Consultar buckets (2 puntos)**
 
 Como estudiante, quiero listar los buckets de mi cuenta para conocer los recursos disponibles.
+
+**Criterios de aceptación:**
 
 - La lista muestra el nombre y la fecha de creacion de cada bucket.
 - Si no hay buckets, el programa indica que la lista esta vacia.
@@ -32,6 +36,8 @@ Como estudiante, quiero listar los buckets de mi cuenta para conocer los recurso
 
 Como estudiante, quiero crear un bucket con un nombre unico para almacenar mis objetos.
 
+**Criterios de aceptación:**
+
 - Puedo proporcionar un nombre o aceptar uno sugerido; el nombre enviado incluye un sufijo unico.
 - El programa informa si AWS crea el bucket o devuelve un error.
 
@@ -39,6 +45,8 @@ Como estudiante, quiero crear un bucket con un nombre unico para almacenar mis o
 
 Como estudiante, quiero seleccionar un bucket existente para dirigir a el las operaciones
 siguientes.
+
+**Criterios de aceptación:**
 
 - El nombre introducido queda como bucket actual y aparece en el menu.
 - Las operaciones que requieren bucket se detienen con un aviso si no hay uno seleccionado.
@@ -49,6 +57,8 @@ siguientes.
 
 Como estudiante, quiero subir un archivo local al bucket actual y asignarle una key de S3.
 
+**Criterios de aceptación:**
+
 - El programa solicita una ruta local; si el archivo existe, permite indicar la key y realiza la subida.
 - Si la ruta no existe, informa el error y permite reintentar; una entrada vacia cancela la subida.
 
@@ -56,12 +66,16 @@ Como estudiante, quiero subir un archivo local al bucket actual y asignarle una 
 
 Como estudiante, quiero ver las keys y tamanos de los objetos de mi bucket actual.
 
+**Criterios de aceptación:**
+
 - Para un bucket con objetos, se muestra cada key y su tamano en bytes.
 - Para un bucket vacio, se informa que no contiene objetos.
 
 **US-07 · Descargar un objeto (5 puntos)**
 
 Como estudiante, quiero descargar un objeto existente a una ruta local para consultar su contenido.
+
+**Criterios de aceptación:**
 
 - El programa verifica que la key exista antes de pedir el destino; si no existe, informa y permite reintentar.
 - Si el destino requiere carpetas que no existen, las crea; al completar la descarga informa la ruta resultante.
@@ -71,12 +85,16 @@ Como estudiante, quiero descargar un objeto existente a una ruta local para cons
 
 Como estudiante, quiero eliminar una key del bucket actual para retirar un objeto que ya no necesito.
 
+**Criterios de aceptación:**
+
 - La key indicada se envia a S3 para su eliminacion y el programa informa el resultado.
 - Si AWS rechaza la solicitud, se muestra el error.
 
 **US-09 · Vaciar un bucket (8 puntos)**
 
 Como estudiante, quiero eliminar todos los objetos del bucket actual antes de borrarlo.
+
+**Criterios de aceptación:**
 
 - La operacion solo continua si escribo exactamente el nombre del bucket; cualquier otro valor cancela el vaciado.
 - Se recorren todas las paginas de resultados y se informa el total eliminado y los errores por objeto.
@@ -85,6 +103,8 @@ Como estudiante, quiero eliminar todos los objetos del bucket actual antes de bo
 **US-10 · Eliminar un bucket vacio (2 puntos)**
 
 Como estudiante, quiero eliminar el bucket actual cuando ya no lo necesito.
+
+**Criterios de aceptación:**
 
 - El programa solicita a AWS eliminar el bucket actual e informa el resultado.
 - Si el bucket no esta vacio o AWS rechaza la solicitud, se informa el error sin ocultarlo.
@@ -96,6 +116,8 @@ Como estudiante, quiero eliminar el bucket actual cuando ya no lo necesito.
 Como estudiante, quiero elegir y aplicar una politica JSON a un bucket para practicar el
 control de acceso en S3.
 
+**Criterios de aceptación:**
+
 - Se enumeran los archivos `politica*.json` de las subcarpetas; la seleccion invalida o un JSON mal formado se informa sin llamar a S3.
 - Antes de aplicar, se reemplaza `NOMBRE-DE-TU-BUCKET` en los recursos y se advierte que la politica puede permitir lectura publica.
 - Solo con confirmacion `s` se llama a `put_bucket_policy`; otra respuesta cancela la operacion.
@@ -104,6 +126,8 @@ control de acceso en S3.
 
 Como estudiante, quiero retirar la politica actual de un bucket y confirmar la accion antes
 de cambiar su acceso.
+
+**Criterios de aceptación:**
 
 - Solo con confirmacion `s` se llama a `delete_bucket_policy` para el bucket indicado.
 - Si cancelo o AWS rechaza la solicitud, el programa informa la cancelacion o el error.
