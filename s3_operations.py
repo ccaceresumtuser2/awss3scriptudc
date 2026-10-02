@@ -25,6 +25,7 @@ def probar_conexion():
     try:
         identidad = session.client("sts").get_caller_identity()
         print("Conexion OK.")
+        print(f"Informacion de la identidad:->{identidad}")
         print(f" - Account: {identidad['Account']}")
         print(f" - ARN: {identidad['Arn']}")
         listar_buckets()
@@ -54,10 +55,11 @@ def listar_buckets():
         return
     print("Buckets disponibles:")
     for b in buckets:
+        print(f"Info Bucket-{b}")
         print(f" - {b['Name']} (creado: {b['CreationDate']})")
 
 
-def subir_archivo(bucket, ruta_local, key):
+def subir_archivo_bucket(bucket, ruta_local, key):
     try:
         s3.upload_file(ruta_local, bucket, key)
         print(f"Archivo '{ruta_local}' subido como '{key}' en '{bucket}'.")
@@ -123,12 +125,109 @@ def eliminar_objeto(bucket, key):
         print(f"Error al eliminar el objeto: {e}")
 
 
+def eliminar_lote_objetos(bucket, objetos):
+    respuesta = s3.delete_objects(
+        Bucket=bucket,
+        Delete={"Objects": objetos, "Quiet": True},
+    )
+    errores = respuesta.get("Errors", [])
+    for error in errores:
+        print(f"No se pudo eliminar '{error.get('Key')}': {error.get('Message')}")
+    return len(objetos) - len(errores)
+
+
+def eliminar_todos_objetos(bucket):
+    print(f"Se eliminaran todos los objetos del bucket '{bucket}'.")
+    if input(f"Escribe '{bucket}' para confirmar: ").strip() != bucket:
+        print("Operacion cancelada.")
+        return
+
+    eliminados = 0
+    try:
+        estado_versionado = s3.get_bucket_versioning(Bucket=bucket).get("Status")
+        if estado_versionado in ("Enabled", "Suspended"):
+            paginas = s3.get_paginator("list_object_versions").paginate(
+                Bucket=bucket
+            )
+            for pagina in paginas: #en el paginador s3 devuelve como maximo 1000 elementos por pagina, por eso se itera sobre las paginas y luego sobre los elementos de cada pagina
+                versiones = pagina.get("Versions", [])
+                marcadores = pagina.get("DeleteMarkers", [])
+                objetos = [
+                    {"Key": elemento["Key"], "VersionId": elemento["VersionId"]}
+                    for elemento in versiones + marcadores
+                ]
+                if objetos:
+                    eliminados += eliminar_lote_objetos(bucket, objetos)
+        else:
+            paginas = s3.get_paginator("list_objects_v2").paginate(Bucket=bucket)
+            for pagina in paginas:
+                objetos = [
+                    {"Key": objeto["Key"]}
+                    for objeto in pagina.get("Contents", [])
+                ]
+                if objetos:
+                    eliminados += eliminar_lote_objetos(bucket, objetos)
+    except ClientError as e:
+        print(f"Error al vaciar el bucket: {e}")
+        return
+
+    print(f"Se eliminaron {eliminados} objetos/versiones de '{bucket}'.")
+
+
 def eliminar_bucket(bucket):
     try:
         s3.delete_bucket(Bucket=bucket)
         print(f"Bucket '{bucket}' eliminado.")
     except ClientError as e:
         print(f"Error al eliminar el bucket (debe estar vacio primero): {e}")
+
+def subir_local_upload_bucket(bucket_actual):
+        ruta_local = ""
+        while True:
+            ruta_local = input(
+                        "Ruta del archivo local a subir (vacio para cancelar): "
+                    ).strip()
+            if not ruta_local:
+                        print("Subida cancelada.")
+                        break
+            if os.path.isfile(ruta_local):
+                        key = input(
+                            "Nombre (key) en S3 [igual al archivo]: "
+                        ).strip() or ruta_local
+                        subir_archivo_bucket(bucket_actual, ruta_local, key)
+                        break
+            print(f"El archivo '{ruta_local}' no existe en local. Intenta de nuevo.")
+
+
+def descargar_objeto_interactivo(bucket_actual):
+    while True:
+        key = input(
+            "Key del objeto a descargar (vacio para cancelar): "
+        ).strip()
+        if not key:
+            print("Descarga cancelada.")
+            break
+        try:
+            existe = objeto_existe(bucket_actual, key)
+        except ClientError as e:
+            print(f"Error al verificar el objeto: {e}")
+            continue
+        if not existe:
+            print(
+                f"La key '{key}' no existe en el bucket "
+                f"'{bucket_actual}'. Intenta de nuevo."
+            )
+            continue
+        while True:
+            ruta_local = input(
+                "Ruta local de destino (vacio para cancelar): "
+            ).strip()
+            if not ruta_local:
+                print("Descarga cancelada.")
+                break
+            if descargar_archivo(bucket_actual, key, ruta_local):
+                break
+        break
 
 
 def menu():
@@ -145,7 +244,8 @@ def menu():
         print("6. Listar objetos del bucket actual")
         print("7. Descargar objeto")
         print("8. Eliminar objeto")
-        print("9. Eliminar bucket actual")
+        print("9. Eliminar todos los objetos del bucket actual")
+        print("10. Eliminar bucket actual")
         print("0. Salir")
         opcion = input("Elige una opcion: ").strip()
         print(f"{'='*40}")
@@ -165,21 +265,7 @@ def menu():
             if not bucket_actual:
                 print("Primero selecciona o crea un bucket.")
                 continue
-            ruta_local = ""
-            while True:
-                ruta_local = input(
-                    "Ruta del archivo local a subir (vacio para cancelar): "
-                ).strip()
-                if not ruta_local:
-                    print("Subida cancelada.")
-                    break
-                if os.path.isfile(ruta_local):
-                    key = input(
-                        "Nombre (key) en S3 [igual al archivo]: "
-                    ).strip() or ruta_local
-                    subir_archivo(bucket_actual, ruta_local, key)
-                    break
-                print(f"El archivo '{ruta_local}' no existe en local. Intenta de nuevo.")
+            subir_local_upload_bucket(bucket_actual)
         elif opcion == "6":
             if not bucket_actual:
                 print("Primero selecciona o crea un bucket.")
@@ -189,34 +275,7 @@ def menu():
             if not bucket_actual:
                 print("Primero selecciona o crea un bucket.")
                 continue
-            while True:
-                key = input(
-                    "Key del objeto a descargar (vacio para cancelar): "
-                ).strip()
-                if not key:
-                    print("Descarga cancelada.")
-                    break
-                try:
-                    existe = objeto_existe(bucket_actual, key)
-                except ClientError as e:
-                    print(f"Error al verificar el objeto: {e}")
-                    continue
-                if not existe:
-                    print(
-                        f"La key '{key}' no existe en el bucket "
-                        f"'{bucket_actual}'. Intenta de nuevo."
-                    )
-                    continue
-                while True:
-                    ruta_local = input(
-                        "Ruta local de destino (vacio para cancelar): "
-                    ).strip()
-                    if not ruta_local:
-                        print("Descarga cancelada.")
-                        break
-                    if descargar_archivo(bucket_actual, key, ruta_local):
-                        break
-                break
+            descargar_objeto_interactivo(bucket_actual)
         elif opcion == "8":
             if not bucket_actual:
                 print("Primero selecciona o crea un bucket.")
@@ -224,6 +283,11 @@ def menu():
             key = input("Key del objeto a eliminar: ").strip()
             eliminar_objeto(bucket_actual, key)
         elif opcion == "9":
+            if not bucket_actual:
+                print("Primero selecciona o crea un bucket.")
+                continue
+            eliminar_todos_objetos(bucket_actual)
+        elif opcion == "10":
             if not bucket_actual:
                 print("Primero selecciona o crea un bucket.")
                 continue
