@@ -1,0 +1,429 @@
+<mxfile host="app.diagrams.net" agent="GitHub Copilot" pages="4">
+  <diagram id="uml-components" name="Componentes">
+    <mxGraphModel dx="1853" dy="2176" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cmp-user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="Usuario&#xa;CLI" vertex="1">
+          <mxGeometry height="120" width="80" x="80" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-ops" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;s3_operations.py&lt;br&gt;menú, buckets, objetos, vaciado" vertex="1">
+          <mxGeometry height="145" width="300" x="280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-pol" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;s3_policies.py&lt;br&gt;selección, validación y gestión de políticas" vertex="1">
+          <mxGeometry height="145" width="300" x="280" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-sdk" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;boto3 / botocore&lt;br&gt;Session · S3 client · STS client&lt;br&gt;ClientError" vertex="1">
+          <mxGeometry height="155" width="300" x="720" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-sts" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=15;" value="&lt;b&gt;«service»&lt;/b&gt;&lt;br&gt;AWS STS&lt;br&gt;GetCallerIdentity" vertex="1">
+          <mxGeometry height="115" width="250" x="1210" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-s3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=15;" value="&lt;b&gt;«service»&lt;/b&gt;&lt;br&gt;Amazon S3&lt;br&gt;Buckets · objetos · versiones&lt;br&gt;Bucket policies" vertex="1">
+          <mxGeometry height="145" width="250" x="1210" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-6" edge="1" parent="1" source="cmp-local" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="-120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-7" edge="1" parent="1" source="cmp-local" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VihEAusNI-Yhrvv2E332-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="-86" />
+              <mxPoint x="545" y="-86" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-local" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" value="&lt;b&gt;«external»&lt;/b&gt;&lt;br&gt;Sistema de archivos local&lt;br&gt;Carga y descarga de objetos" vertex="1">
+          <mxGeometry height="115" width="300" x="290" y="-50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-json" parent="1" style="shape=folder;tabWidth=40;tabHeight=14;tabPosition=left;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="&lt;b&gt;«data»&lt;/b&gt;&lt;br&gt;politicas/*.json&lt;br&gt;Plantillas de bucket policy" vertex="1">
+          <mxGeometry height="120" width="300" x="280" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-creds" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="&lt;b&gt;«configuration»&lt;/b&gt;&lt;br&gt;~/.aws/credentials&lt;br&gt;perfil default · región us-east-1" vertex="1">
+          <mxGeometry height="120" width="300" x="720" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e1" edge="1" parent="1" source="cmp-user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="cmp-ops" value="interacción CLI">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-e2" edge="1" parent="1" source="cmp-user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="cmp-pol" value="interacción CLI">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e3" edge="1" parent="1" source="cmp-ops" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;" target="cmp-sdk" value="usa Session / S3 / STS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-e4" edge="1" parent="1" source="cmp-pol" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#6c8ebf;" target="cmp-sdk" value="usa Session / S3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="582.5" />
+              <mxPoint x="620" y="427.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-e5" edge="1" parent="1" source="cmp-sdk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="cmp-s3" value="API S3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e6" edge="1" parent="1" source="cmp-sdk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="cmp-sts" value="API STS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1335" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-e7" edge="1" parent="1" source="cmp-ops" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="cmp-local" value="lee/escribe archivos">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="190" />
+              <mxPoint x="430" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-e8" edge="1" parent="1" source="cmp-pol" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d6b656;" target="cmp-json" value="lee JSON seleccionado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e9" edge="1" parent="1" source="cmp-creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="cmp-sdk" value="carga credenciales">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="870" y="275" />
+              <mxPoint x="940" y="275" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmp-awscli" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;AWS CLI V2&lt;br&gt;Herramienta local independiente de boto3" vertex="1">
+          <mxGeometry height="125" width="300" x="710" y="-210" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e10" edge="1" parent="1" source="cmp-creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="cmp-awscli" value="perfil default">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e11" edge="1" parent="1" source="cmp-awscli" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="cmp-s3" value="comandos S3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cmp-e12" edge="1" parent="1" source="cmp-awscli" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="cmp-sts" value="comandos STS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-1" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" value="" vertex="1">
+          <mxGeometry height="137.97" width="170" x="230" y="-260" as="geometry" />
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-2" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" value="" vertex="1">
+          <mxGeometry height="137.97" width="170" x="460" y="-260" as="geometry" />
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=20;" value="c://upload" vertex="1">
+          <mxGeometry height="30" width="60" x="280" y="-200" as="geometry" />
+        </mxCell>
+        <mxCell id="VihEAusNI-Yhrvv2E332-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=20;" value="c://download" vertex="1">
+          <mxGeometry height="30" width="60" x="510" y="-200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uml-activity" name="Actividad operaciones s3">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1200" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="act-ops-panel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#82b366;dashed=1;verticalAlign=top;spacingTop=10;fontSize=17;fontStyle=1;" value="Flujo A · s3_operations.py" vertex="1">
+          <mxGeometry height="1000" width="1120" x="40" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-start" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#222222;strokeColor=#222222;" value="" vertex="1">
+          <mxGeometry height="28" width="28" x="95" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-run" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Ejecutar script&#xa;s3_operations.py" vertex="1">
+          <mxGeometry height="70" width="190" x="175" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-menu" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Mostrar menú y&#xa;leer opción" vertex="1">
+          <mxGeometry height="70" width="190" x="440" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-valid" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="¿Opción válida?" vertex="1">
+          <mxGeometry height="90" width="130" x="735" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-invalid" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" value="Informar opción inválida" vertex="1">
+          <mxGeometry height="65" width="160" x="720" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-exit" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="¿Salir?" vertex="1">
+          <mxGeometry height="95" width="140" x="465" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-op" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="Validar bucket cuando&#xa;la opción lo requiere; ejecutar&#xa;operación elegida" vertex="1">
+          <mxGeometry height="95" width="230" x="420" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-api" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" value="Invocar S3 o STS&#xa;(buckets, objetos, versiones)" vertex="1">
+          <mxGeometry height="85" width="230" x="420" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-local" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="¿Subida o descarga?" vertex="1">
+          <mxGeometry height="100" width="150" x="740" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-fs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="Leer o escribir&#xa;archivo local" vertex="1">
+          <mxGeometry height="70" width="160" x="735" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-result" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="Mostrar resultado&#xa;o informar error" vertex="1">
+          <mxGeometry height="75" width="200" x="435" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="act-e2" edge="1" parent="1" source="act-o-run" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-menu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-e6" edge="1" parent="1" source="act-o-exit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-op" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-e8" edge="1" parent="1" source="act-o-op" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-e9" edge="1" parent="1" source="act-o-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-local">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570.06" y="560" />
+              <mxPoint x="820.06" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act-e10" edge="1" parent="1" source="act-o-local" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-fs" value="sí: transferencia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-e11" edge="1" parent="1" source="act-o-local" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1;" target="act-o-result" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;no&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0006" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="720.06" y="630" />
+              <mxPoint x="720.06" y="720" />
+              <mxPoint x="535" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act-e12" edge="1" parent="1" source="act-o-fs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1;" target="act-o-result">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590.06" y="785.06" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act-o-edge-start" edge="1" parent="1" source="act-o-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-run">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-edge-menu" edge="1" parent="1" source="act-o-menu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-valid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-edge-invalid" edge="1" parent="1" source="act-o-valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b85450;" target="act-o-invalid" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-edge-valid" edge="1" parent="1" source="act-o-valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=2;" target="act-o-exit" value="sí">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000.06" y="120" />
+              <mxPoint x="1000.06" y="480" />
+              <mxPoint x="690.06" y="480" />
+              <mxPoint x="690.06" y="292.47" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act-o-edge-retry" edge="1" parent="1" source="act-o-invalid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="act-o-menu">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="680.06" y="262.47" />
+              <mxPoint x="680.06" y="220" />
+              <mxPoint x="535" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act-o-edge-end" edge="1" parent="1" source="act-o-exit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="eNnRh6CmFRh3sc4ZCSOp-1" value="sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="act-o-edge-loop" edge="1" parent="1" source="act-o-result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;strokeWidth=1;fontSize=1;" target="act-o-menu" value="volver al menú">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60.06" y="937.53" />
+              <mxPoint x="60.06" y="210" />
+              <mxPoint x="470.06" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eNnRh6CmFRh3sc4ZCSOp-1" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="150" y="370" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Actividad políticas" id="inCoXQoj3rJHSecXEBzz">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1050" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-0" />
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-1" parent="ytgICbIaHNAJ5wBDijtu-0" />
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-2" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;dashed=1;verticalAlign=top;spacingTop=10;fontSize=17;fontStyle=1;" value="Actividad · s3_policies.py" vertex="1">
+          <mxGeometry height="1150" width="970" x="35" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-16" parent="ytgICbIaHNAJ5wBDijtu-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#222222;strokeColor=#222222;" value="" vertex="1">
+          <mxGeometry height="28" width="28" x="480" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-17" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Ejecutar script&#xa;s3_policies.py" vertex="1">
+          <mxGeometry height="70" width="190" x="400" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-18" parent="ytgICbIaHNAJ5wBDijtu-1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="¿Aplicar o&#xa;eliminar?" vertex="1">
+          <mxGeometry height="90" width="150" x="420" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-19" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="Seleccionar archivo&#xa;politicas/politica*.json" vertex="1">
+          <mxGeometry height="75" width="190" x="700" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-20" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="Leer JSON, validar Statement&#xa;y sustituir marcador del bucket" vertex="1">
+          <mxGeometry height="85" width="230" x="680" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-21" parent="ytgICbIaHNAJ5wBDijtu-1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="¿Confirma aplicar?" vertex="1">
+          <mxGeometry height="100" width="170" x="700" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-22" parent="ytgICbIaHNAJ5wBDijtu-1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="¿Confirma eliminar?" vertex="1">
+          <mxGeometry height="100" width="170" x="180" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-23" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" value="crear_cliente_s3()&#xa;put_bucket_policy()" vertex="1">
+          <mxGeometry height="75" width="190" x="690" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-25" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" value="Mostrar resultado, error&#xa;o cancelación" vertex="1">
+          <mxGeometry height="75" width="220" x="400" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-41" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-42" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-43" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-19" value="aplicar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-44" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-45" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-46" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="ytgICbIaHNAJ5wBDijtu-23" value="sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-47" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-22" value="eliminar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-48" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;" target="ytgICbIaHNAJ5wBDijtu-24" value="sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-49" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b85450;strokeWidth=1;" target="ytgICbIaHNAJ5wBDijtu-25" value="no / error">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-50" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b85450;" target="ytgICbIaHNAJ5wBDijtu-25" value="no / error">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540.07" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-51" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="ytgICbIaHNAJ5wBDijtu-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580.07" y="887.47" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-52" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="320" y="629.9966666666664" as="sourcePoint" />
+            <mxPoint x="470.0666666666666" y="1002.53" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-53" edge="1" parent="ytgICbIaHNAJ5wBDijtu-1" source="ytgICbIaHNAJ5wBDijtu-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#666666;" target="vkzl7e2Z5sFqncSV8JY4-0">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="1135" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ytgICbIaHNAJ5wBDijtu-24" parent="ytgICbIaHNAJ5wBDijtu-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" value="crear_cliente_s3()&#xa;delete_bucket_policy()" vertex="1">
+          <mxGeometry height="75" width="190" x="170" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="vkzl7e2Z5sFqncSV8JY4-0" parent="ytgICbIaHNAJ5wBDijtu-1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="495" y="1140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uml-deployment" name="Despliegue UML">
+    <mxGraphModel dx="1463" dy="928" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dep-local" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;spacingTop=12;fontSize=17;" value="&lt;b&gt;«device» Equipo local · Windows&lt;/b&gt;" vertex="1">
+          <mxGeometry height="850" width="760" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-cloud" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#d79b00;verticalAlign=top;spacingTop=12;fontSize=17;" value="&lt;b&gt;«cloud» AWS · us-east-1&lt;/b&gt;" vertex="1">
+          <mxGeometry height="850" width="600" x="865" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-python" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;spacingTop=10;fontSize=15;" value="&lt;b&gt;«executionEnvironment»&lt;/b&gt;&lt;br&gt;Python 3.x · entorno de ejecución" vertex="1">
+          <mxGeometry height="620" width="365" x="75" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-ops" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;s3_operations.py&lt;br&gt;Operaciones de buckets y objetos" vertex="1">
+          <mxGeometry height="100" width="295" x="110" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-policies" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;s3_policies.py&lt;br&gt;Gestión de políticas S3" vertex="1">
+          <mxGeometry height="100" width="295" x="110" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-sdk" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" value="&lt;b&gt;«library»&lt;/b&gt;&lt;br&gt;boto3 · botocore&lt;br&gt;Instaladas desde requirements.txt" vertex="1">
+          <mxGeometry height="105" width="295" x="110" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-cli" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;AWS CLI V2&lt;br&gt;Herramienta de línea de comandos" vertex="1">
+          <mxGeometry height="115" width="245" x="500" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-creds" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;~/.aws/credentials + config&lt;br&gt;perfil default · región us-east-1" vertex="1">
+          <mxGeometry height="115" width="245" x="500" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-json" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;politicas/*.json&lt;br&gt;Entrada de s3_policies.py" vertex="1">
+          <mxGeometry height="105" width="245" x="500" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-s3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;" value="&lt;b&gt;«node»&lt;/b&gt;&lt;br&gt;Amazon S3&lt;br&gt;Buckets · objetos · bucket policies" vertex="1">
+          <mxGeometry height="145" width="310" x="1010" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-sts" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;" value="&lt;b&gt;«node»&lt;/b&gt;&lt;br&gt;AWS STS&lt;br&gt;GetCallerIdentity" vertex="1">
+          <mxGeometry height="130" width="310" x="1010" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-e1" edge="1" parent="1" source="dep-python" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=13;" target="dep-s3" value="HTTPS · TLS · 443">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120.05" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-e2" edge="1" parent="1" source="dep-python" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d79b00;fontSize=13;" target="dep-sts" value="HTTPS · TLS · 443">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="725" y="700" />
+              <mxPoint x="725" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-e3" edge="1" parent="1" source="dep-cli" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#82b366;fontSize=13;" target="dep-s3" value="HTTPS · TLS · 443">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="877.53" y="230" />
+              <mxPoint x="877.53" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-e4" edge="1" parent="1" source="dep-cli" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#82b366;fontSize=13;" target="dep-sts" value="HTTPS · TLS · 443">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380.05" y="207.47" />
+              <mxPoint x="1380.05" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-e5" edge="1" parent="1" source="dep-creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#666666;" target="dep-python" value="lee perfil default">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-e6" edge="1" parent="1" source="dep-creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#666666;" target="dep-cli" value="lee perfil default">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-e7" edge="1" parent="1" source="dep-json" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#666666;" target="dep-policies" value="lee plantilla JSON">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
